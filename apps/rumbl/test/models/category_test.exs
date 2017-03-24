@@ -1,5 +1,5 @@
 defmodule Rumbl.CategoryTest do
-  use Rumbl.ModelCase
+  use Rumbl.ModelCase, async: true
 
   alias Rumbl.Category
 

@@ -1,9 +1,8 @@
 defmodule Rumbl.VideoTest do
-  use Rumbl.ModelCase
-
+  use Rumbl.ModelCase, async: true
   alias Rumbl.Video
 
-  @valid_attrs %{description: "some content", title: "some content", url: "some content"}
+  @valid_attrs %{description: "some content", title: "some content", url: "http://youtu.be"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

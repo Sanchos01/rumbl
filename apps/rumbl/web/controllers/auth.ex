@@ -20,8 +20,6 @@ defmodule Rumbl.Auth do
     user = repo.get_by(Rumbl.User, username: username)
 
     cond do
-      # user && first(given_pass) && checkpw(given_pass, user.password_hash) ->
-      #   {:ok, login(conn, user)}
       user ->
         cond do
           !is_nil(user.password_hash) && checkpw(given_pass, user.password_hash) ->

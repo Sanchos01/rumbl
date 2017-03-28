@@ -2,6 +2,7 @@ defmodule Rumbl.Auth do
   import Plug.Conn
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   import Phoenix.Controller
+  import String, only: [first: 1]
   alias Rumbl.Router.Helpers
 
   def authenticate_user(conn, _opts) do
@@ -20,7 +21,7 @@ defmodule Rumbl.Auth do
     user = repo.get_by(Rumbl.User, username: username)
 
     cond do
-      user && checkpw(given_pass, user.password_hash) ->
+      user && first(given_pass) && checkpw(given_pass, user.password_hash) ->
         {:ok, login(conn, user)}
       user ->
         {:error, :unauthorized, conn}

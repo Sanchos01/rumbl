@@ -11,7 +11,7 @@ defmodule Rumbl.SessionController do
         Repo) do
       {:ok, conn} ->
         conn
-        |> put_flash(:info, "Welcome back!")
+        |> put_flash(:info, "Welcome back, #{user}!")
         |> redirect(to: page_path(conn, :index))
       {:error, _reason, conn} ->
         conn

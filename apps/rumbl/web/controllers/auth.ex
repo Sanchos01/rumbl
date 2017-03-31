@@ -18,6 +18,7 @@ defmodule Rumbl.Auth do
   def login_by_username_and_pass(conn, username, given_pass, opts) do
     repo = Keyword.fetch!(opts, :repo)
     user = repo.get_by(Rumbl.User, username: username)
+    IO.puts(user)
 
     cond do
       user ->

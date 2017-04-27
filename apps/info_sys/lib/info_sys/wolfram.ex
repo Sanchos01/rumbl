@@ -6,10 +6,18 @@ defmodule InfoSys.Wolfram do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
+  defp save_resp(resp) do
+    {:ok, file} = File.open "xml", [:write]
+    IO.binwrite file, "#{resp}"
+    File.close file
+    resp
+  end
+
   def fetch(query_str, query_ref, owner, _limit) do
     query_str
     |> fetch_xml()
-    |> xpath(~x"/queryresult/pod[contains(@title, 'Result') or contains(@title, 'Definitions')]/subpod/plaintext/text()")
+    |> save_resp()
+    |> xpath(~x"/queryresult/pod[contains(@title, 'Result') or contains(@title, 'Definitions')]/subpod/plaintext/text()"s)
     |> send_results(query_ref, owner)
   end
 
@@ -18,7 +26,7 @@ defmodule InfoSys.Wolfram do
   end
 
   defp send_results(answer, query_ref, owner) do
-    results = [%Result{backend: "wolfram", score: 95, text: to_string(answer)}]
+    results = [%Result{backend: "wolfram", score: 95, text: answer}]
     send(owner, {:results, query_ref, results})
   end
 

@@ -7,7 +7,7 @@ defmodule InfoSys.Wolfram do
   end
 
   defp save_resp(resp) do
-    {:ok, file} = File.open "xml", [:write]
+    {:ok, file} = File.open "wolfram.xml", [:write]
     IO.binwrite file, "#{resp}"
     File.close file
     resp
@@ -17,8 +17,16 @@ defmodule InfoSys.Wolfram do
     query_str
     |> fetch_xml()
     |> save_resp()
-    |> xpath(~x"/queryresult/pod[contains(@title, 'Result') or contains(@title, 'Definitions')]/subpod/plaintext/text()"s)
-    |> send_results(query_ref, owner)
+    |> (fn x -> cond do
+      x |> xpath(~x"/queryresult/@success") == 'true' ->
+        x |> xpath(~x"/queryresult/pod[contains(@title, 'Result') or contains(@title, 'Definitions')]/subpod/plaintext/text()"s)
+          |> case do
+            "" -> nil
+            resp -> send_results(resp, query_ref, owner)
+          end
+      true -> nil
+      end
+    end).()
   end
 
   defp send_results(nil, query_ref, owner) do

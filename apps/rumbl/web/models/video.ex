@@ -17,8 +17,8 @@ defmodule Rumbl.Video do
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
-  @required_fields ~w(url title description) |> Enum.map(&(String.to_atom(&1)))
-  @optional_fields ~w(category_id) |> Enum.map(&(String.to_atom(&1)))
+  @required_fields ~w(url title description)a
+  @optional_fields ~w(category_id)a
 
   def changeset(model, params \\ %{}) do
     model

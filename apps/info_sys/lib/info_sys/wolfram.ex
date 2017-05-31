@@ -21,10 +21,10 @@ defmodule InfoSys.Wolfram do
       x |> xpath(~x"/queryresult/@success") == 'true' ->
         x |> xpath(~x"/queryresult/pod[contains(@title, 'Result') or contains(@title, 'Definitions')]/subpod/plaintext/text()"s)
           |> case do
-            "" -> nil
+            "" -> send_results(nil, query_ref, owner)
             resp -> send_results(resp, query_ref, owner)
           end
-      true -> nil
+      true -> send_results(nil, query_ref, owner)
       end
     end).()
   end

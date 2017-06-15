@@ -14,7 +14,9 @@ defmodule Rumbl.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases(),
-     deps: deps()]
+     deps: deps(),
+     test_coverage: [tool: ExCoveralls],
+     preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]]
   end
 
   # Configuration for the OTP application.
@@ -43,7 +45,8 @@ defmodule Rumbl.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 3.0"},
-     {:info_sys, in_umbrella: true}]
+     {:info_sys, in_umbrella: true},
+     {:excoveralls, "~> 0.6", only: :test}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

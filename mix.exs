@@ -5,7 +5,9 @@ defmodule Rumbrella.Mixfile do
     [apps_path: "apps",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: deps(),
+     test_coverage: [tool: ExCoveralls],
+     preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]]
   end
 
   # Dependencies can be Hex packages:
@@ -21,6 +23,6 @@ defmodule Rumbrella.Mixfile do
   # Dependencies listed here are available only for this project
   # and cannot be accessed from applications inside the apps folder
   defp deps do
-    []
+    [{:excoveralls, "~> 0.6", only: :test}]
   end
 end

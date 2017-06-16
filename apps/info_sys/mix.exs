@@ -12,8 +12,7 @@ defmodule InfoSys.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps(),
-     test_coverage: [tool: ExCoveralls],
-     preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]]
+     test_coverage: [tool: ExCoveralls]]
   end
 
   # Configuration for the OTP application
@@ -39,7 +38,6 @@ defmodule InfoSys.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:sweet_xml, "~> 0.6.5"},
-     {:excoveralls, "~> 0.6", only: :test}]
+    [{:sweet_xml, "~> 0.6.5"}]
   end
 end
